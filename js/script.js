@@ -118,7 +118,8 @@ function searchBar (list){
       const searchString = searchField.value.toLowerCase();
       let searchResults = [];
       const filter = list.filter(hit => { //inspired by https://www.jamesqquick.com/blog/build-a-javascript-search-bar
-         if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString)){
+         let fullName = hit.name.first.toLowerCase() + ' ' + hit.name.last.toLowerCase()
+         if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString) || fullName.includes(searchString)){
             searchResults.push(hit)
          }
       }); 
@@ -137,7 +138,7 @@ function searchBar (list){
       }
    })
    
-   const searchButton = searchField.firstChild
+   const searchButton = searchField.nextSibling
    searchButton.addEventListener('click', () =>{
       const searchResults = searchStudentsName(list) 
       if (searchResults.length === 0){
