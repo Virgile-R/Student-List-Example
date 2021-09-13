@@ -10,8 +10,8 @@ For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
-//Code reworked from the RSVP app on Treehouse.
 
+//Code reworked from the RSVP app on Treehouse.
 /***
  * returns an HTML element. Accepts an element name as a string and an array of objects as proprieties to be applied (format prop:property name, value:property value)
  * exemple use: createElement("div", [{prop:"className", value: "main"}]) returns a div with the class propriety "main"
@@ -83,11 +83,21 @@ function showPage(list, page) {
 }
 
 /***
- * Search bar function: inserts a search bar to the top of the page. takes a list as an argument
+ * Search bar function: inserts a search bar to the top of the page and handles its functionalities. takes a list as an argument
  */
 
 function searchBar (list){
-  
+   function noResultDivCreator() {
+      const noResultDiv = document.createElement('div');
+      const studentList = document.querySelector('.student-list');
+      const pageList = document.querySelector('.link-list');
+      studentList.innerHTML = "";
+      pageList.innerHTML ="";
+      noResultDiv.innerHTML = "No matches were found.";
+      studentList.appendChild(noResultDiv);
+   }
+   
+   function createSearchBar() {
       const header = document.querySelector('header')
       const searchBar = document.createElement('label')
       searchBar.for ='search'
@@ -101,39 +111,52 @@ function searchBar (list){
          {prop: 'src', value:'img/icn-search.svg'},
          {prop: 'alt', value:'Search icon'}]))
       header.insertAdjacentElement('beforeend', searchBar)   
+      }  
+      
+   function searchStudentsName(list) {
       const searchField = document.querySelector("#search")
-      searchField.addEventListener('keyup', (e) =>{
-         e.preventDefault()
-         const searchString = searchField.value.toLowerCase()
-         let searchResults = [];
-         const filter = list.filter(hit => {
-            if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString)){
-               searchResults.push(hit)
-            }
-         //return searchResults   
-         }); 
-         if (searchResults.length === 0){
-            const noResultDiv = document.createElement('div');
-            const studentList = document.querySelector('.student-list');
-            const pageList = document.querySelector('.link-list');
-            studentList.innerHTML = "";
-            pageList.innerHTML ="";
-            noResultDiv.innerHTML = "No matches were found.";
-            studentList.appendChild(noResultDiv);
+      const searchString = searchField.value.toLowerCase();
+      let searchResults = [];
+      const filter = list.filter(hit => { //inspired by https://www.jamesqquick.com/blog/build-a-javascript-search-bar
+         if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString)){
+            searchResults.push(hit)
+         }
+      }); 
+      return searchResults
+   }
+   createSearchBar()
+   const searchField = document.querySelector("#search")
+   searchField.addEventListener('keyup', () =>{
+      const searchResults = searchStudentsName(list)      
+      if (searchResults.length === 0){
+            noResultDivCreator()
+            
+      }  else {
+         showPage(searchResults, 1);
+         addPagination(searchResults);
+      }
+   })
+   
+   const searchButton = searchField.firstChild
+   searchButton.addEventListener('click', () =>{
+      const searchResults = searchStudentsName(list) 
+      if (searchResults.length === 0){
+            noResultDivCreator()
             
          }  else {
          showPage(searchResults, 1);
          addPagination(searchResults);
       }
+         
+      })
+   }   
 
-   })   
-
-
-   
-   
 
    
-}
+   
+
+   
+
 
 /*
 Create the `addPagination` function
@@ -181,4 +204,4 @@ function addPagination(list) {
 // Call functions
 showPage(data, 1)
 addPagination(data)
-searchBar (data)
+searchBar(data)
