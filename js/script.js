@@ -87,6 +87,7 @@ function showPage(list, page) {
  */
 
 function searchBar (list){
+   //create a div if the search results in no matches
    function noResultDivCreator() {
       const noResultDiv = document.createElement('div');
       const studentList = document.querySelector('.student-list');
@@ -97,6 +98,7 @@ function searchBar (list){
       studentList.appendChild(noResultDiv);
    }
    
+   //generate the html for the search bar
    function createSearchBar() {
       const header = document.querySelector('header')
       const searchBar = document.createElement('label')
@@ -112,7 +114,8 @@ function searchBar (list){
          {prop: 'alt', value:'Search icon'}]))
       header.insertAdjacentElement('beforeend', searchBar)   
       }  
-      
+   
+   //returns an array with the search results   
    function searchStudentsName(list) {
       const searchField = document.querySelector("#search")
       const searchString = searchField.value.toLowerCase();
