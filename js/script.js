@@ -57,11 +57,11 @@ function createLI(student) {
 let itemPerPage = 9 //items per page should probably be a variable in case we want to add a feature to change the displayed number...
 
 
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
- list parameter represent student data that will be passed as an argument when the function is called.
- page parameter represent the page number that will be passed as an argument when the function is called.
+/***
+* Create the `showPage` function
+* This function will create and insert/append the elements needed to display a "page" of nine students
+* list parameter represent student data that will be passed as an argument when the function is called.
+* page parameter represent the page number that will be passed as an argument when the function is called.
 */
 function showPage(list, page) {
    const startIndex = (page * itemPerPage) - itemPerPage; 
@@ -159,9 +159,9 @@ function searchBar (list){
    
 
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
+/***
+* Create the `addPagination` function
+* This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
    const numberOfPages = Math.round(list.length/itemPerPage);
