@@ -120,7 +120,7 @@ function searchBar (list){
       const searchField = document.querySelector("#search")
       const searchString = searchField.value.toLowerCase();
       let searchResults = [];
-      const filter = list.filter(hit => { //inspired by https://www.jamesqquick.com/blog/build-a-javascript-search-bar
+      list.filter(hit => { //inspired by https://www.jamesqquick.com/blog/build-a-javascript-search-bar
          let fullName = hit.name.first.toLowerCase() + ' ' + hit.name.last.toLowerCase()
          if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString) || fullName.includes(searchString)){
             searchResults.push(hit)
@@ -178,7 +178,7 @@ function addPagination(list) {
          {prop: "className", value: "nav-btn-prev"}
 
       ]))
-      for (i = 1; i <=numberOfPages; i++){
+      for (let i = 1; i <=numberOfPages; i++){
       
          li.appendChild(createElement('button',[
             {prop: "type", value: "button"},
@@ -220,12 +220,14 @@ function addPagination(list) {
                showPage(list, currentPageNumber - 1)
                }
          } else if (e.target.className === "nav-btn-next"){
+           
             const currentPageButton = document.querySelector('.active');
             const currentPageNumber = parseInt(currentPageButton.textContent)
             if (!(currentPageButton.nextSibling.className === "nav-btn-next" ) ) {
                currentPageButton.classList.remove('active')
                currentPageButton.nextSibling.classList.add('active')
                showPage(list, currentPageNumber + 1)
+               
                }
          }
       
@@ -237,6 +239,9 @@ function addPagination(list) {
 
 
 // Call functions
+// eslint-disable-next-line no-undef
 showPage(data, 1)
+// eslint-disable-next-line no-undef
 addPagination(data)
+// eslint-disable-next-line no-undef
 searchBar(data)

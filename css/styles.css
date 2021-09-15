@@ -166,7 +166,11 @@ header h2 {
 	box-shadow: 0 1px 8px 0 rgba(22, 42, 90, 0.05);
 	transition: 0.4s;
 }
+.nav-btn-prev, .nav-btn-next{
+  margin:0px 6px;
 
+
+}
 .pagination li button.active, .pagination li button:hover {
   background-color: #1e90ff;
   color: #fff;
