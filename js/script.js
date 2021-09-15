@@ -55,7 +55,7 @@ function createLI(student) {
 }
 
 let itemPerPage = 9 //items per page should probably be a variable in case we want to add a feature to change the displayed number...
-
+let currentStudentSet = data
 
 /***
 * Create the `showPage` function
@@ -125,13 +125,15 @@ function searchBar (list){
          if (hit.name.first.toLowerCase().includes(searchString) || hit.name.last.toLowerCase().includes(searchString) || fullName.includes(searchString)){
             searchResults.push(hit)
          }
-      }); 
+      });
+      
       return searchResults
    }
    createSearchBar()
    const searchField = document.querySelector("#search")
    searchField.addEventListener('keyup', () =>{
-      const searchResults = searchStudentsName(list)      
+      const searchResults = searchStudentsName(list)
+      currentStudentSet = searchResults       
       if (searchResults.length === 0){
             noResultDivCreator()
             
@@ -143,7 +145,8 @@ function searchBar (list){
    
    const searchButton = searchField.nextSibling
    searchButton.addEventListener('click', () =>{
-      const searchResults = searchStudentsName(list) 
+      const searchResults = searchStudentsName(list)
+      currentStudentSet = searchResults  
       if (searchResults.length === 0){
             noResultDivCreator()
             
@@ -197,10 +200,11 @@ function addPagination(list) {
   
       const firstButton = pageList.firstElementChild.firstElementChild.nextSibling
       firstButton.className = "active"
-
-      pageList.addEventListener('click', (e) => {
+   }}
+   const pageList = document.querySelector('.link-list');   
+   pageList.addEventListener('click', (e) => {
          const buttons = document.querySelectorAll('button');
-         if (e.target.tagName === 'BUTTON' && !(e.target.className === "nav-btn-prev") && !(e.target.className === "nav-btn-next")) {
+         if (e.target.tagName === 'BUTTON' && e.target.className !== "nav-btn-prev" && e.target.className !== "nav-btn-next") {
             
             for (let i = 0; i < buttons.length; i++) {
                buttons[i].classList.remove('active')
@@ -208,7 +212,7 @@ function addPagination(list) {
             const button = e.target;
             
             button.classList.add("active")
-            showPage(list, button.textContent)
+            showPage(currentStudentSet, button.textContent)
 
          } else if (e.target.className === "nav-btn-prev") {
             const currentPageButton = document.querySelector('.active');
@@ -217,7 +221,8 @@ function addPagination(list) {
                currentPageButton.classList.remove('active')
                currentPageButton.previousSibling.classList.add('active')
                
-               showPage(list, currentPageNumber - 1)
+               showPage(currentStudentSet, currentPageNumber - 1)
+               
                }
          } else if (e.target.className === "nav-btn-next"){
            
@@ -226,7 +231,8 @@ function addPagination(list) {
             if (!(currentPageButton.nextSibling.className === "nav-btn-next" ) ) {
                currentPageButton.classList.remove('active')
                currentPageButton.nextSibling.classList.add('active')
-               showPage(list, currentPageNumber + 1)
+               showPage(currentStudentSet, currentPageNumber + 1)
+               
                
                }
          }
@@ -235,7 +241,7 @@ function addPagination(list) {
 
 
       })
-}}
+
 
 
 // Call functions
