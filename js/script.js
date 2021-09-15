@@ -170,38 +170,69 @@ function addPagination(list) {
    const numberOfPages = Math.round(list.length/itemPerPage);
    const pageList = document.querySelector('.link-list');
    pageList.innerHTML = " ";
-   if (numberOfPages > 1){  
-   for (i = 1; i <=numberOfPages; i++){
+   if (numberOfPages > 1){
       const li = document.createElement("li")
-      li.appendChild(createElement('button',[
-         {prop: "type", value: "button"},
-         {prop: "textContent", value: i}
-        
+      li.appendChild(createElement('button', [
+         {prop: 'type', value:'button'},
+         {prop: "textContent", value: "Prev. Page"},
+         {prop: "className", value: "nav-btn-prev"}
+
       ]))
+      for (i = 1; i <=numberOfPages; i++){
       
-      pageList.insertAdjacentElement('beforeend', li)
-   }
-  
-   const firstButton = pageList.firstElementChild.firstElementChild
-   firstButton.className = "active"
-
-   pageList.addEventListener('click', (e) => {
-      if (e.target.tagName === 'BUTTON') {
-         const buttons = document.querySelectorAll('button');
-         for (let i = 0; i < buttons.length; i++) {
-            buttons[i].classList.remove('active')
-         }
-         const button = e.target;
+         li.appendChild(createElement('button',[
+            {prop: "type", value: "button"},
+            {prop: "textContent", value: i},
+            
          
-         button.classList.add("active")
-         showPage(data, button.textContent)
+         ]))
+         
+         pageList.insertAdjacentElement('beforeend', li)
+      }
+      li.appendChild(createElement('button', [
+         {prop: 'type', value:'button'},
+         {prop: "textContent", value: "Next Page"},
+         {prop: "className", value: "nav-btn-next"}
+      ]))
+  
+      const firstButton = pageList.firstElementChild.firstElementChild.nextSibling
+      firstButton.className = "active"
 
-      } 
-     
+      pageList.addEventListener('click', (e) => {
+         const buttons = document.querySelectorAll('button');
+         if (e.target.tagName === 'BUTTON' && !(e.target.className === "nav-btn-prev") && !(e.target.className === "nav-btn-next")) {
+            
+            for (let i = 0; i < buttons.length; i++) {
+               buttons[i].classList.remove('active')
+            }
+            const button = e.target;
+            
+            button.classList.add("active")
+            showPage(list, button.textContent)
+
+         } else if (e.target.className === "nav-btn-prev") {
+            const currentPageButton = document.querySelector('.active');
+            const currentPageNumber = parseInt(currentPageButton.textContent)
+            if (parseInt(currentPageNumber) > 1) {
+               currentPageButton.classList.remove('active')
+               currentPageButton.previousSibling.classList.add('active')
+               
+               showPage(list, currentPageNumber - 1)
+               }
+         } else if (e.target.className === "nav-btn-next"){
+            const currentPageButton = document.querySelector('.active');
+            const currentPageNumber = parseInt(currentPageButton.textContent)
+            if (!(currentPageButton.nextSibling.className === "nav-btn-next" ) ) {
+               currentPageButton.classList.remove('active')
+               currentPageButton.nextSibling.classList.add('active')
+               showPage(list, currentPageNumber + 1)
+               }
+         }
+      
 
 
 
-   })
+      })
 }}
 
 
