@@ -14,7 +14,7 @@ For assistance:
  * returns an HTML element. Accepts an element name as a string and an array of objects as proprieties to be applied (format prop:property name, value:property value)
  * exemple use: createElement("div", [{prop:"className", value: "main"}]) returns a div with the class propriety "main"
  ***/
-function createElement(elementName, arrayProperty) {
+function createElement(elementName, arrayProperty = []) {
   const element = document.createElement(elementName);
   for (let i = 0; i < arrayProperty.length; i++) {
     element[arrayProperty[i]["prop"]] = arrayProperty[i]["value"];
@@ -115,7 +115,7 @@ function searchBar(list) {
     const searchBar = document.createElement("label");
     searchBar.for = "search";
     searchBar.className = "student-search";
-    searchBar.appendChild(createElement("span", [])); //Does Javascript have optional args like python?
+    searchBar.appendChild(createElement("span")); 
     searchBar.appendChild(
       createElement("input", [
         { prop: "id", value: "search" },
@@ -143,8 +143,7 @@ function searchBar(list) {
       let fullName =
         hit.name.first.toLowerCase() + " " + hit.name.last.toLowerCase();
       if (
-        hit.name.first.toLowerCase().includes(searchString) ||
-        hit.name.last.toLowerCase().includes(searchString) ||
+       
         fullName.includes(searchString)
       ) {
         searchResults.push(hit);
