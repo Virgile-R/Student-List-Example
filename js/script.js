@@ -183,7 +183,7 @@ function searchBar(list) {
  * This function will create and insert/append the elements needed for the pagination buttons
  */
 function addPagination(list) {
-  const numberOfPages = Math.round(list.length / itemPerPage);
+  const numberOfPages = Math.ceil(list.length / itemPerPage);
   const pageList = document.querySelector(".link-list");
   pageList.innerHTML = " ";
   if (numberOfPages > 1) {
@@ -260,3 +260,5 @@ showPage(data, 1);
 addPagination(data);
 // eslint-disable-next-line no-undef
 searchBar(data);
+
+
