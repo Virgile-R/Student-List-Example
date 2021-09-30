@@ -39,7 +39,7 @@ function createLI(student) {
   divStudent.appendChild(
     createElement("img", [
       { prop: "className", value: "avatar" },
-      { prop: "src", value: `${student.picture.thumbnail} ` },
+      { prop: "src", value: `${student.picture.large} ` },
       { prop: "alt", value: "profile picture" },
     ])
   );
